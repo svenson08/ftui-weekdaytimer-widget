@@ -1,5 +1,18 @@
 # ftui-weekdaytimer-widget
 
+Widget Theme Dark
+
+![Std_dark](https://github.com/svenson08/ftui-weekdaytimer-widget/blob/master/screenshots/dark_default.PNG?raw=true "Std_dark")
+
+
+Widget Theme light
+
+![Std_light](https://github.com/svenson08/ftui-weekdaytimer-widget/blob/master/screenshots/light_default.PNG?raw=true "Std_light")
+
+Deaktivierter WeekdayTimer
+
+![Std_Disabled](https://github.com/svenson08/ftui-weekdaytimer-widget/blob/master/screenshots/dark_disabled.PNG?raw=true "Std_Disabled")
+
 Verwendet:
 -----------
 * JQuery: https://jquery.com/  [in fhem enthalten]
