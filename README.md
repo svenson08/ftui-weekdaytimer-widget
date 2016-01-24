@@ -70,4 +70,6 @@ In diesem Beispiel wird das WeekdayTimer-Popup über
 ```
 aufgerufen. Es kann aber auch jegliches anderes "Objekt" als Aufruf festgelegt werden.
 
-
+Hinweis
+-----------
+Aktuell wird **sunrise** und **sunset** des WeekdayTimers nicht unterstützt
