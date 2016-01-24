@@ -1,5 +1,7 @@
 # ftui-weekdaytimer-widget
 
+![Alt text](https://github.com/svenson08/ftui-weekdaytimer-widget/tree/master/screenshots/dark_default.PNG "Optional title")
+
 Verwendet:
 -----------
 * JQuery: https://jquery.com/  [in fhem enthalten]
