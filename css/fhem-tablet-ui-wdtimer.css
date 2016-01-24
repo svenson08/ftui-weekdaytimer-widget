@@ -1,0 +1,150 @@
+/* wdtimer_widget default CSS */
+.wdtimer {
+    z-index: 1000;
+}
+.wdtimer_dialog {
+    height: 150px;
+    overflow: auto;
+    width: 200px;
+    text-align: center;
+}
+
+.wdtimer_profile{
+    padding: 5px;
+}
+.wdtimer_profile.error {
+    background-color: #cd3700 !important; 
+}
+
+.wdtimer_button {
+    padding: 0.5em;
+    margin-left: 0.3em;
+    text-decoration: none;
+    border: none;
+    font-weight: normal;
+    color: inherit;
+}
+.wdtimer_deleteprofile {
+    font-size: 15px;
+    height:35px;
+    width:35px;    
+}
+
+.wdtimer_time{ 
+    border: none;
+    font-size: small;
+    padding: 6px 6px 6px 6px !important;
+    width: 50px;    
+    height: 35px;    
+}
+.wdtimer_cmd {
+    height: 35px;    
+    border: none;
+}
+
+.wdtimer_checkbox {
+	position: relative;
+    display: inherit;       
+    padding: 0.5em;
+    border: none;
+    margin-left: -4px;        
+    height:35px;
+    line-height: 1.6em;
+}
+  
+.wdtimer_checkbox label {
+	cursor: pointer;
+	position: absolute;
+	left: 7px;
+	top: 7px;
+}
+.wdtimer_checkbox label:after {
+	opacity: 0;
+	content: '';
+	position: absolute;
+	top: -7px;
+	left: -7px;
+	width: 35px;
+	height: 35px;    
+}
+.wdtimer_checkbox input[type=checkbox]:checked + label:after {
+	opacity: 0.5;
+}
+ 
+.wdtimer_header {
+    text-align: center; 
+    width: 100%;
+    padding: 5px;
+    font-size: 1.4em;    
+}
+.wdtimer_header_icon {
+    float: left;
+    margin: 4px;
+}
+
+.wdtimer_footer {
+    width: 100%;
+    padding: 5px;
+    float: right;
+}
+.wdtimer_footer .ui-dialog-buttonset{
+    float: inherit;
+}
+
+.wdtimer_active {
+    float:left;
+    display: inline-block;
+    margin: 6px;
+}
+.wdtimer_shader {
+    position:absolute;
+    background-color:#000000;
+    opacity:0.5;
+    height:100%;
+    width:100%;
+    top:0px;
+    left:0px;    
+}
+.wdtimer_shader.wdtimer_profilelist { background-color:#ff1a1a; }
+
+/* ---------------------------------------------------- */
+/* wdtimer_widget Style "round" */
+.wdtimer_button.round { border-radius: 10px; }        
+.wdtimer_header.round { border-top-left-radius: 10px; border-top-right-radius: 10px; }
+.wdtimer_footer.round { border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.wdtimer_checkbox.begin.round { border-bottom-left-radius: 10px; border-top-left-radius: 10px; }  
+.wdtimer_checkbox.end.round { border-bottom-right-radius: 10px; border-top-right-radius: 10px; }   
+.wdtimer_checkbox.round input[type=checkbox]:checked + label.begin::after { border-bottom-left-radius: 10px; border-top-left-radius: 10px; }    
+.wdtimer_checkbox.round input[type=checkbox]:checked + label.end::after { border-bottom-right-radius: 10px; border-top-right-radius: 10px; } 
+.wdtimer_time.round { border-radius: 10px; }
+/* ---------------------------------------------------- */
+/* wdtimer_widget Style "square" */
+.wdtimer_cmd.square { border-radius: unset; }
+/* ---------------------------------------------------- */
+/* wdtimer_widget Theam "dark" */
+.wdtimer_button.dark:hover, .wdtimer_time.dark:hover, .wdtimer_cmd.dark:hover, .wdtimer_checkbox.dark:hover { background-color: #007fff; }
+.wdtimer_button.dark { color: #d1eeee; background-color: #393939; }
+.wdtimer_time.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_datetimepicker.dark { background-color: #393939 !important; color: #d1eeee !important; }
+.wdtimer_cmd.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_checkbox.dark { background-color: #393939; color: #d1eeee; }
+.wdtimer_checkbox.dark label:after { background-color: #cc5500; }
+.wdtimer_dialog.dark{ background-color: #2a2a2a; }
+.wdtimer_header.dark { background-color: #262626; color: #d1eeee; }
+.wdtimer_footer.dark { background-color: #262626; }
+/* ---------------------------------------------------- */
+/* wdtimer_widget Theam "light" */
+.wdtimer_button.light:hover, .wdtimer_time.light:hover, .wdtimer_cmd.light:hover, .wdtimer_checkbox.light:hover { background-color: #007fff; }
+.wdtimer_button.light { color: #000000; background-color: #e3c7c7; border: 1px solid #e0e0e0; }
+.wdtimer_time.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.wdtimer_datetimepicker.light { background-color: #e3c7c7 !important; color: #000000 !important; border: 1px solid #e0e0e0; }
+.wdtimer_cmd.light { background-color: #e3c7c7; color: #000000; border: 1px solid #e0e0e0; }
+.wdtimer_checkbox.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
+.wdtimer_checkbox.light label:after { background-color: #cc5500; }
+
+.wdtimer_dialog.light{ background-color: #ffffff; }
+.wdtimer_header.light { background-color: #ffffff; color: #000000; border: 1px solid #e0e0e0; }
+.wdtimer_footer.light { background-color: #ffffff; border: 1px solid #e0e0e0; }
+/* ---------------------------------------------------- */
+/* wdtimer_widget Theam "custom" */
+/* ---------------------------------------------------- */
