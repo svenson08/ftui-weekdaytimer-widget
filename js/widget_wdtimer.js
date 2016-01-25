@@ -275,8 +275,8 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         wdtimer_state = elem.find('.js-switch').prop('checked');   
         if (wdtimer_state != arr_config[2][3]) {
             //Geänderten Status setzen
-            if (wdtimer_state == true) {cmd = "set EVENT_TEST_onIntervall enable";} 
-           else { cmd = "set EVENT_TEST_onIntervall disable";}
+            if (wdtimer_state == true) {cmd = "set "+device+" enable";} 
+           else { cmd = "set "+device+" disable";}
            DEBUG && console.log("Status wird geändert '"+cmd+"'  ["+attr_device+"]");
 
             setFhemStatus(cmd);
