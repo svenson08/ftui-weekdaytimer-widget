@@ -277,7 +277,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             //Geänderten Status setzen
             if (wdtimer_state == true) {cmd = "set "+device+" enable";} 
            else { cmd = "set "+device+" disable";}
-           DEBUG && console.log("Status wird geändert '"+cmd+"'  ["+attr_device+"]");
+           DEBUG && console.log("Status wird geändert '"+cmd+"'  ["+device+"]");
 
             setFhemStatus(cmd);
             if( device && typeof device != "undefined" && device !== " ") {
@@ -303,7 +303,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
                    if (arr_newconfig[0][i][3] == true) { cmd += widget_wdtimer.wdtimer_getWeekdaysNum( arr_newconfig[0][i][0] )+'|'+arr_newconfig[0][i][1]+'|'+arr_newconfig[0][i][2]+' '; }
                 }            
                 cmd += arr_newconfig[2][5]+' '+arr_newconfig[2][6];
-                DEBUG && console.log("Define wird geändert '"+cmd+"'  ["+attr_device+"]");
+                DEBUG && console.log("Define wird geändert '"+cmd+"'  ["+device+"]");
                 
                 setFhemStatus(cmd.trim());
                 if( device && typeof device != "undefined" && device !== " ") {
