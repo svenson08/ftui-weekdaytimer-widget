@@ -606,14 +606,6 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         });
     },            
     update: function (dev,par) {
-        // var deviceElements= this.elements.filter('div[data-device="'+dev+'"]');
-        // var base = this;
-        // deviceElements.each(function(index) {
-            // var val = localStorage.getItem($(this).data('device'));
-            
-        // });       
-        // update reading for content
-//console.log('update wdttimer done '+dev+' '+par);
     }
 });
 
