@@ -175,7 +175,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
                 $('.wdtimer_'+device).find('.ui-dialog-titlebar-close').remove();                
             }, 
             open: function () {
-                $(this).parent().children(".ui-dialog-titlebar").prepend('<i class="wdtimer_header_icon fa fa-bar-chart"></i>');
+                $(this).parent().children(".ui-dialog-titlebar").prepend('<i class="wdtimer_header_icon fa oa '+elem.data('icon')+'"></i>');
                 base.wdtimer_setStatusChangeAction($('.wdtimer_'+device),config[2][3]);
             },
         });        
