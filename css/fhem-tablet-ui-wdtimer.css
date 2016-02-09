@@ -30,11 +30,17 @@
     width:35px;    
 }
 
+.wdtimer_profiletime {
+    width: auto !important; 
+}
+.wdtimer_profilecmd{
+    width: auto !important; 
+}
 .wdtimer_time{ 
     border: none;
     font-size: small;
     padding: 6px 6px 6px 6px !important;
-    width: 50px;    
+    width: 50px !important;    
     height: 35px;    
 }
 .wdtimer_cmd {
@@ -50,6 +56,7 @@
     margin-left: -4px;        
     height:35px;
     line-height: 1.6em;
+    width:35px;
 }
   
 .wdtimer_checkbox label {
@@ -64,8 +71,8 @@
 	position: absolute;
 	top: -7px;
 	left: -7px;
-	width: 35px;
-	height: 35px;    
+	width: 34px;
+	height: 33px;    
 }
 .wdtimer_checkbox input[type=checkbox]:checked + label:after {
 	opacity: 0.5;
@@ -78,8 +85,9 @@
     font-size: 1.4em;    
 }
 .wdtimer_header_icon {
-    float: left;
-    margin: 4px;
+    position: absolute;
+    left: 8px;
+    font-size: 1.25em !important;
 }
 
 .wdtimer_footer {

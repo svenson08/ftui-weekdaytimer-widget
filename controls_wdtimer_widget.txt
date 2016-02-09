@@ -1,5 +1,5 @@
 DIR www/tablet
 DIR www/tablet/css
 DIR www/tablet/js
-UPD 2016-01-25_19:07:00 36291 www/tablet/js/widget_wdtimer.js
-UPD 2016-01-25_‏‎14:06:33 4846 www/tablet/css/fhem-tablet-ui-wdtimer.css
+UPD 2016-02-09_19:15:00 35352 www/tablet/js/widget_wdtimer.js
+UPD 2016-02-09_06:33:00 5018 www/tablet/css/fhem-tablet-ui-wdtimer.css

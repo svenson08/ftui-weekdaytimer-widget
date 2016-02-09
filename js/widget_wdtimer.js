@@ -97,10 +97,9 @@ if (!$.fn.Switchery){
     dynamicload('lib/switchery.min.js', null, null, false);
     $('head').append('<link rel="stylesheet" href="'+ dir + '/../lib/switchery.min.css" type="text/css" />');
 }
-
-if (!$.fn.draggable)
+if (!$.fn.draggable){
     dynamicload('../pgm2/jquery-ui.min.js', null, null, false);
-
+}
 var widget_wdtimer = $.extend({}, widget_widget, {
     widgetname:"wdtimer",    
     wdtimer_multiArrayindexOf: function(arr, val) {
@@ -145,6 +144,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             autoOpen: false,
             modal: true,
             resizable: true, 
+            draggable: false, 
             closeOnEscape: false,
             dialogClass: "wdtimer "+"wdtimer_"+device, 
             title: config[2][4],
@@ -447,7 +447,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             
             //--------------- localStore erstellen ---------------   
 
-            //Befehlliste aus Attribut aufbauen [optional]                                        
+            //Befehlliste aus Attribut aufbauen [optional]             
             if (attr_cmdlist != '') {                  
                 $.each( attr_cmdlist, function( text, cmd ) {
                     var arr_cmd = new Array();      
@@ -522,8 +522,8 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             arr_config.push(attr_theme); //verwendetes Theme
             arr_config.push(attr_style); //verwendeter Style       
          
-            arr_cmdlist.sort(); //Gesamte Befehlliste  
-            arr_weekdaytimer.push(arr_profiles,arr_cmdlist,arr_config); // Array mit gesamter Konfiguration            
+            arr_cmdlist.sort(function(a, b){return a[0] - b[0];}); //Gesamte Befehlliste 
+            arr_weekdaytimer.push(arr_profiles,arr_cmdlist,arr_config); // Array mit gesamter Konfiguration         
             widget_wdtimer.wdtimer_saveLocal(arr_weekdaytimer); //Konfiguration speichern
             //-----------------------------------------------
 
@@ -608,5 +608,4 @@ var widget_wdtimer = $.extend({}, widget_widget, {
     update: function (dev,par) {
     }
 });
-
 
