@@ -1,8 +1,7 @@
 /* 
 
 TODO's :
-Dialog sollte noch responsive sein (Tablet/Smartphone Nutzung)
-Profil soll sundrise/sunset unterstützen
+Profil soll sunrise/sunset unterstützen
     
 ----------------------------------------------------------------------------
 Version 1.0
@@ -35,15 +34,18 @@ ATTRIBUTE:
     -----------------
     data-language : In WeekdayTimer genutzte Sprache (Standard 'de').
     data-cmdlist='{"<Anzeigetext>":"<FHEM Befehl>","<Anzeigetext>":"<FHEM Befehl>"}' : Variableliste der auswählbaren Aktionen.
+    data-sortcmdlist: MANUELL, WERT, TEXT. Sortierung der Befehlliste kann bestimmt werden (Standard ist an (TEXT)). Bei verwendung von MANUELL
+                               muss data-cmdlist angegeben werden!
     data-width: Breite des Dialogs (Standard '450').
     data-height: Höhe des Dialogs (Standard '300').
     data-title: Titel des Dialogs. Angabe ALIAS verwendet den Alias des Weekdaytimers.
                                                Angabe NAME verwendet den Namen des Weekdaytimers.
                                                Angabe eines beliebigen Dialog-Titels (Standard 'NAME').
     data-icon: Dialog Titel Icon (Standard 'fa-clock-o').
-    data-disablestate -> deaktiviert die möglichkeit den weekdaytimer zu deaktivieren/aktivieren
+    data-disablestate: Deaktiviert die Möglichkeit den weekdaytimer zu deaktivieren/aktivieren
     data-theme: Angabe des Themes, mögich ist 'dark', 'light', oder beliebige eigene CSS-Klasse für individuelle Themes.
     data-style: Angabe 'round' oder 'square'.
+	data-savecfg: Speichern der Änderungen in der fhem.cfg (Standard 'false).
     
 localStore:
 ~~~~~~~~~    
@@ -82,6 +84,7 @@ Name: wdtimer_<FHEM_Device_Name>
         (7)[Disable Status-Change] (true = Funktion gesperrt, false = Funktion freigegeben)
         (8)[Theme-Class] 
         (9)[Style]
+		(10) [savecfg] (true=autom. speichern, false=fhem.cfg wird nicht gespeichert)
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -270,6 +273,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         var arr_config = new Array();
         var cmd = "";
         var wdtimer_state = true;
+		var saveconfig = false; //Flag ob die Konfiguration gespeichert werden müsste (abhängig vom Parameter)
         arr_config = widget_wdtimer.wdtimer_loadLocal(device);   
  
         wdtimer_state = elem.find('.js-switch').prop('checked');   
@@ -277,12 +281,13 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             //Geänderten Status setzen
             if (wdtimer_state == true) {cmd = "set "+device+" enable";} 
            else { cmd = "set "+device+" disable";}
-           DEBUG && console.log("Status wird geändert '"+cmd+"'  ["+device+"]");
+           ftui.log(1,"Status wird geändert '"+cmd+"'  ["+device+"]");
 
-            setFhemStatus(cmd);
+            setFhemStatus(cmd);			
             if( device && typeof device != "undefined" && device !== " ") {
-                TOAST && $.toast(cmd);
-            }            
+                    ftui.toast(cmd);
+            }
+            saveconfig = true;
             //--------------------------------------------------
             //Aktuelle Einstellungen/Profile in localStore schreiben    
             arr_config[2][3] = wdtimer_state;
@@ -303,12 +308,13 @@ var widget_wdtimer = $.extend({}, widget_widget, {
                    if (arr_newconfig[0][i][3] == true) { cmd += widget_wdtimer.wdtimer_getWeekdaysNum( arr_newconfig[0][i][0] )+'|'+arr_newconfig[0][i][1]+'|'+arr_newconfig[0][i][2]+' '; }
                 }            
                 cmd += arr_newconfig[2][5]+' '+arr_newconfig[2][6];
-                DEBUG && console.log("Define wird geändert '"+cmd+"'  ["+device+"]");
+                ftui.log(1,"Define wird geändert '"+cmd+"'  ["+device+"]");
                 
                 setFhemStatus(cmd.trim());
                 if( device && typeof device != "undefined" && device !== " ") {
-                    TOAST && $.toast(cmd);
+                    ftui.toast(cmd);
                 }               
+                saveconfig = true;
             } else { //Mind. ein Profile enthält einen Fehler
                 alert('Einstellungen konnten nicht übernommen werden');
                 return false;
@@ -318,6 +324,9 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             widget_wdtimer.wdtimer_saveLocal(arr_newconfig); 
             //--------------------------------------------------  
         }
+		if(saveconfig && arr_config[2][10] == true) {
+			setFhemStatus("save");
+		}
         return true;
     },
     wdtimer_saveLocal: function(config) {
@@ -329,7 +338,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         dataFromStore = JSON.parse(localStorage.getItem(this.widgetname+"_"+device));        
         return dataFromStore;
     },         
-    wdtimer_setStatusChangeAction(elem,wdtimer_enabled){
+    wdtimer_setStatusChangeAction: function(elem,wdtimer_enabled){
             if (wdtimer_enabled == false) { 
                 elem.children('.wdtimer_dialog').append('<div class="ui-widget-overlay ui-front wdtimer_shader wdtimer_profilelist" style="z-index: 5999; top: '+elem.children('.wdtimer_dialog').position().top+'px; height: '+elem.children('.wdtimer_dialog').height()+'px;      "></div>'); 
                 elem.find('.ui-dialog-buttonset').children().eq(0).hide();
@@ -409,12 +418,14 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         var attr_device = elem.data('device');  
         var attr_language = elem.data('language');
         var attr_cmdlist = elem.data('cmdlist'); 
+        var attr_sortcmdlist = elem.data('sortcmdlist');
         var attr_backgroundcolor = elem.data('background-color');        
         var attr_color = elem.data('color');     
         var attr_title = elem.data('title');
         var attr_disablestate = elem.data('disablestate');
         var attr_theme = elem.data('theme');
         var attr_style = elem.data('style');
+		var attr_savecfg = elem.data('savecfg');
         
         $.ajax({
             async: true,
@@ -520,9 +531,18 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             arr_config.push(wdtimer_condition.trim()); //Condition    
             arr_config.push(attr_disablestate); //Weekdaytimer aktivier-/deaktivierbar       
             arr_config.push(attr_theme); //verwendetes Theme
-            arr_config.push(attr_style); //verwendeter Style       
-         
-            arr_cmdlist.sort(function(a, b){return a[0] - b[0];}); //Gesamte Befehlliste 
+            arr_config.push(attr_style); //verwendeter Style    
+			arr_config.push(attr_savecfg);  // autom. speichern der konfiguration
+                           
+            if (attr_sortcmdlist != "MANUELL" ) {
+                if (attr_sortcmdlist == "WERT" ) { 
+					arr_cmdlist.sort(function(a, b){return a[1] - b[1];});  //Gesamte Befehlliste sortieren nach Werten
+				}else{
+					// alles andere, d.h. "TEXT" ist default
+					arr_cmdlist.sort(function(a, b){return a[0].localeCompare(b[0])});  //Gesamte Befehlliste sortieren nach Anzeigetext
+				}	
+            };
+			
             arr_weekdaytimer.push(arr_profiles,arr_cmdlist,arr_config); // Array mit gesamter Konfiguration         
             widget_wdtimer.wdtimer_saveLocal(arr_weekdaytimer); //Konfiguration speichern
             //-----------------------------------------------
@@ -532,8 +552,8 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             showDialogObject.on( "click", function() {
                 widget_wdtimer.wdtimer_showDialog(elem, attr_device);                        
             });    
-            //-----------------------------------------------       
-            DEBUG && console.log("Widget vorbereitungen sind abgeschlossen. ["+attr_device+"]");            
+            //-----------------------------------------------    
+           ftui.log(1,"Widget vorbereitungen sind abgeschlossen. ["+attr_device+"]");                       
         });    
     },      
     wdtimer_getCurrentProfiles: function (elem, cmdlist) {
@@ -591,16 +611,18 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         this.elements = $('div[data-type="'+this.widgetname+'"]');
         this.elements.each(function(index) {            
             var elem=$(this);
-            //Setzten der Standartattribute falls diese nicht angegeben wurden
+            //Setzten der Standartattribute falls diese nicht angegeben wurden  
             elem.data('language',    $(this).data('language') || 'de');
-            elem.data('cmdlist',    $(this).data('cmdlist') || '');            
-            elem.data('width',    $(this).data('width') || '465');
+            elem.data('cmdlist',    $(this).data('cmdlist') || '');     
+            elem.data('sortcmdlist',    $(this).data('sortcmdlist') || "TEXT");            
+            elem.data('width',    $(this).data('width') || '480');
             elem.data('height',    $(this).data('height') || '300');
             elem.data('title',  $(this).data('title') || 'NAME');
             elem.data('icon',  $(this).data('icon') || 'fa-clock-o');
             elem.data('disablestate',  $(this).data('disablestate') || false);
             elem.data('style',  $(this).data('style') || 'square'); //round or square           
             elem.data('theme',  $(this).data('theme') || 'light');  //light,dark,custom
+			elem.data('savecfg',$(this).data('savecfg') || false);  // Save FHEM Configuration  
             //-----------------------------------------------
             base.wdtimer_getProfiles(elem);         
         });
