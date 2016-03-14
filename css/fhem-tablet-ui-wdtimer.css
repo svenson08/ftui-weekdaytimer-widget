@@ -136,7 +136,8 @@
 /* ---------------------------------------------------- */
 /* wdtimer_widget Theam "dark" */
 .wdtimer_button.dark:hover, .wdtimer_time.dark:hover, .wdtimer_cmd.dark:hover, .wdtimer_checkbox.dark:hover { background-color: #007fff; }
-.wdtimer_button.dark { color: #ff0000; background-color: #393939; }
+.wdtimer_button.dark { color: #d1eeee; background-color: #393939; }
+.wdtimer_deleteprofile {color: #ff0000!important;}
 .wdtimer_time.dark { background-color: #393939; color: #d1eeee; }
 .wdtimer_datetimepicker.dark { background-color: #393939 !important; color: #d1eeee !important; }
 .wdtimer_cmd.dark { background-color: #393939; color: #d1eeee; }
@@ -148,7 +149,8 @@
 /* ---------------------------------------------------- */
 /* wdtimer_widget Theam "light" */
 .wdtimer_button.light:hover, .wdtimer_time.light:hover, .wdtimer_cmd.light:hover, .wdtimer_checkbox.light:hover { background-color: #007fff; }
-.wdtimer_button.light { color: #ff0000; background-color: #e3c7c7; border: 1px solid #e0e0e0; }
+.wdtimer_button.light { color: #000000; background-color: #e3c7c7; border: 1px solid #e0e0e0; }
+.wdtimer_deleteprofile {color: #ff0000!important;}
 .wdtimer_time.light { background-color: #e3c7c7; color: #000000;  border: 1px solid #e0e0e0; }
 .wdtimer_datetimepicker.light { background-color: #e3c7c7 !important; color: #000000 !important; border: 1px solid #e0e0e0; }
 .wdtimer_cmd.light { background-color: #e3c7c7; color: #000000; border: 1px solid #e0e0e0; }
