@@ -47,6 +47,8 @@ Attribute des weekdayTimer-Widgets
 - **data-disablestate** : Deaktiviert die Möglichkeit den weekdaytimer zu deaktivieren/aktivieren
 - **data-theme** : Angabe des Themes, möglich ist 'dark', 'light', oder beliebige eigene CSS-Klasse für individuelle Themes.
 - **data-style** :Angabe 'round' oder 'square'.
+- **data-savecfg**: Speichern der Änderungen in der fhem.cfg (Standard 'false).
+- **data-timesteps**: Bestimmt die Schritte in dem die Uhrzeiten ausgewählt werden können.
 
 
 Beispiel
