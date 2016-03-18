@@ -4,7 +4,7 @@ TODO's :
 Profil soll sunrise/sunset unterstützen
     
 ----------------------------------------------------------------------------
-Version 1.0
+Version 1.2
 
 WeekdayTimer Widget für fhem-tablet-ui (https://github.com/knowthelist/fhem-tablet-ui)
 Basiert auf der Idee des UZSU Widgets für Samrtviso von mworion (https://github.com/mworion/uzsu_widget)
@@ -21,6 +21,12 @@ JQuery: https://jquery.com/  [in fhem enthalten]
 JQuery-UI: https://jqueryui.com/  [in fhem enthalten]
 Datetimepicker:  https://github.com/xdan/datetimepicker   [in fhem-tablet-ui enthalten]
 Switchery: https://github.com/abpetkov/switchery   [in fhem-tablet-ui enthalten]
+----------------------------------------------------------------------------
+
+Änderungen :
+03.2016: Dialog schließt sich beim Clicken neben den Dialog. Dem Startet Element wird der Cursor Style gesetzt
+
+
 ----------------------------------------------------------------------------
 
 ATTRIBUTE:
@@ -46,6 +52,7 @@ ATTRIBUTE:
     data-theme: Angabe des Themes, mögich ist 'dark', 'light', oder beliebige eigene CSS-Klasse für individuelle Themes.
     data-style: Angabe 'round' oder 'square'.
 	data-savecfg: Speichern der Änderungen in der fhem.cfg (Standard 'false).
+    data-timesteps: Bestimmt die Schritte in dem die Uhrzeiten ausgewählt werden können.
     
 localStore:
 ~~~~~~~~~    
@@ -85,6 +92,7 @@ Name: wdtimer_<FHEM_Device_Name>
         (8)[Theme-Class] 
         (9)[Style]
 		(10) [savecfg] (true=autom. speichern, false=fhem.cfg wird nicht gespeichert)
+        (11) [timesteps]
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -188,7 +196,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         $( ".wdtimer" ).find('.ui-dialog-buttonset > .ui-button').addClass('wdtimer_button '+config[2][8]+" "+config[2][9]);
         //-----------------------------------------------          
         //Verwendete Plugins aktivieren
-        base.wdtimer_setDateTimePicker($('.wdtimer_'+device), device,config[2][9]); //DateTimePicker Plugin zuweisen
+        base.wdtimer_setDateTimePicker($('.wdtimer_'+device), device,config[2][9],device,config[2][11]); //DateTimePicker Plugin zuweisen
         base.wdtimer_setTimerStatusSwitch($('.js-switch'),config[2][7]); //Status Switch
         //-----------------------------------------------                     
         // Aktionen zuweisen
@@ -198,7 +206,16 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         });
         //-----------------------------------------------             
         wdtimer_dialog.dialog( "open" );
+        
+        // Dialog Shader
         $( "body" ).find('.ui-widget-overlay').addClass('wdtimer_shader');     
+        $(".wdtimer_shader").on('click',function() {
+            wdtimer_dialog.dialog( "close" );
+            $('.wdtimer_'+device).remove();                    
+            $('.wdtimer_datetimepicker_'+device).each(function(){ $(this).remove(); });
+            elem.children('.wdtimer_dialog').remove();  
+        });       
+        //-----------------------------------------------          
     },
     wdtimer_buildwdtimercmddropdown: function(cmds, selectedval, theme,style) {
         var result = "";
@@ -266,7 +283,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         $('.wdtimer_'+device).find('.wdtimer_profilelist').append(profile_row);
         
         widget_wdtimer.wdtimer_setDeleteAction($('.wdtimer_'+device), config[2][0]); //Löschen-Schalter Aktion zuweisen      
-        widget_wdtimer.wdtimer_setDateTimePicker($('.wdtimer_'+device), config[2][0],config[2][9]); //DateTimePicker Plugin zuweisen zuweisen              
+        widget_wdtimer.wdtimer_setDateTimePicker($('.wdtimer_'+device), config[2][0],config[2][9],config[2][11]); //DateTimePicker Plugin zuweisen zuweisen              
         widget_wdtimer.wdtimer_saveLocal(config); //Aktuelle Profile lokal speichern
     },            
     wdtimer_saveProfile: function(elem, device) { /*Ändert das DEF des WeekdayTimers und/oder ändert den Disable-Status des WeekdayTimers */
@@ -355,11 +372,14 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             });
         });        
     },            
-    wdtimer_setDateTimePicker: function(elem,device,style) {      
+    wdtimer_setDateTimePicker: function(elem,device,style,steps) {      
         elem.find('.wdtimer_time').each(function(){     
+        
+        console.log('XXX '+steps   );
+        
             if (style != 'dark' ) {var dtp_style = 'default';} else {var dtp_style ='dark'; }
             $(this).datetimepicker({
-                step:5, 
+                step: steps, 
                 lang: 'de',
                 theme: dtp_style,
                 format: 'H:i',
@@ -426,6 +446,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         var attr_theme = elem.data('theme');
         var attr_style = elem.data('style');
 		var attr_savecfg = elem.data('savecfg');
+        var attr_timesteps = elem.data('timesteps');
         
         $.ajax({
             async: true,
@@ -533,6 +554,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             arr_config.push(attr_theme); //verwendetes Theme
             arr_config.push(attr_style); //verwendeter Style    
 			arr_config.push(attr_savecfg);  // autom. speichern der konfiguration
+            arr_config.push(attr_timesteps); //Schritte im Uhrzeit-DropDown
                            
             if (attr_sortcmdlist != "MANUELL" ) {
                 if (attr_sortcmdlist == "WERT" ) { 
@@ -549,6 +571,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
 
             // Aufruf des Popups
             var showDialogObject = (elem.data('starter')) ? $(document).find( elem.data('starter') ) : elem.children(":first");
+            showDialogObject.css({'cursor': 'pointer'});
             showDialogObject.on( "click", function() {
                 widget_wdtimer.wdtimer_showDialog(elem, attr_device);                        
             });    
@@ -623,6 +646,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
             elem.data('style',  $(this).data('style') || 'square'); //round or square           
             elem.data('theme',  $(this).data('theme') || 'light');  //light,dark,custom
 			elem.data('savecfg',$(this).data('savecfg') || false);  // Save FHEM Configuration  
+            elem.data('timesteps',    $(this).data('timesteps') || 30);
             //-----------------------------------------------
             base.wdtimer_getProfiles(elem);         
         });
