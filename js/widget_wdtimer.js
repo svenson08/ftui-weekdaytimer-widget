@@ -196,7 +196,7 @@ var widget_wdtimer = $.extend({}, widget_widget, {
         $( ".wdtimer" ).find('.ui-dialog-buttonset > .ui-button').addClass('wdtimer_button '+config[2][8]+" "+config[2][9]);
         //-----------------------------------------------          
         //Verwendete Plugins aktivieren
-        base.wdtimer_setDateTimePicker($('.wdtimer_'+device), device,config[2][9],device,config[2][11]); //DateTimePicker Plugin zuweisen
+        base.wdtimer_setDateTimePicker($('.wdtimer_'+device), device,config[2][9],config[2][11]); //DateTimePicker Plugin zuweisen
         base.wdtimer_setTimerStatusSwitch($('.js-switch'),config[2][7]); //Status Switch
         //-----------------------------------------------                     
         // Aktionen zuweisen
