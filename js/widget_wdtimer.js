@@ -556,9 +556,9 @@ var widget_wdtimer = $.extend({}, widget_widget, {
                         }
                     } else {
                         profile.push(profileparts[1]);
-                        if (widget_wdtimer.wdtimer_multiArrayindexOf(arr_cmdlist,profileparts[2]) == -1) { //Fehlende Befehle in Befehlliste aufnehmen
+                        if (widget_wdtimer.wdtimer_multiArrayindexOf(arr_cmdlist,profileparts[1]) == -1) { //Fehlende Befehle in Befehlliste aufnehmen
                             var arr_cmd = new Array();      
-                            arr_cmd.push(profileparts[2].toUpperCase()+'*',profileparts[2]);                    
+                            arr_cmd.push(profileparts[1].toUpperCase()+'*',profileparts[1]);                    
                             arr_cmdlist.push(arr_cmd);
                         }
                     }
