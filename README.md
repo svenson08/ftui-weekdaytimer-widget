@@ -26,7 +26,7 @@ Die Datei **widget_wdtimer.js** muss in das js Verzeichnis der fhem-tablet-ui in
 Die Datei **fhem-tablet-ui-wdtimer.css** muss in das css Verzeichnis der fhem-tablet-ui installation.
 Anschließend muss die fhem-tablet-ui-wdtimer.css in der genutzten html datei eingefügt werden.
 ```html
-<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" />
+<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-wdtimer.css" />
 ```
 Alternativ kann der Inhalt der **fhem-tablet-ui-wdtimer.css** auch in die **fhem-tablet-ui-user.css** kopiert werden.
  
