@@ -1,4 +1,6 @@
-# ftui-weekdaytimer-widget
+# WeekDayTimer-Widget für FHEM Tablet UI
+
+Dieses Widget ist für den Einsatz von FHEM Tablet UI 2.x vorgesehen. Dieses Widget ist im separaten Branch auch für FHEM Tablet UI 1.x vorhanden.
 
 Widget Theme Dark
 
